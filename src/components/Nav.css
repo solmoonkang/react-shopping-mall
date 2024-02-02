@@ -1,0 +1,30 @@
+.nav {
+    display: flex;
+    position: fixed;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    padding: 20px;
+    width: 100%;
+    height: 30px;
+    z-index: 1;
+}
+
+.nav__logo {
+    object-fit: contain;
+    position: fixed;
+    width: 30px;
+    left: 40px;
+}
+
+.nav__icons {
+    display: flex;
+    object-fit: contain;
+    position: fixed;
+    width: 70px;
+    right: 40px;
+}
+
+.nav__icons a {
+    margin-right: 10px;
+}
