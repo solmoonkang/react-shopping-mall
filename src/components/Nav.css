@@ -1,0 +1,16 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border-bottom: 2px solid black;
+}
+
+.nav__logo h2 {
+    font-size: 25px;
+}
+
+.nav__icons {
+    display: flex;
+    gap: 5px;
+}
