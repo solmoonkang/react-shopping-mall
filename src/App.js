@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
+import "./App.css";
 
 import Item from "./components/Item";
 import Cart from "./components/Cart";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
-import { LinearProgress, Drawer, Badge, Grid } from "@material-ui/core";
+import Nav from "./components/Nav";
 
 import styled from "styled-components";
 import IconButton from "@material-ui/core/IconButton";
+import { LinearProgress, Drawer, Grid } from "@material-ui/core";
+
 
 const getProducts = async () => {
   return await (await fetch("https://fakestoreapi.com/products")).json();
@@ -60,18 +62,16 @@ const App = () => {
           <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
               <Cart cartItems={cartItems} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart}></Cart>
           </Drawer>
-          <StyledButton onClick={() => setCartOpen(true)}>
-              <Badge badgeContent={getTotalItems(cartItems)} color="error">
-                  <AddShoppingCartIcon></AddShoppingCartIcon>
-              </Badge>
-          </StyledButton>
-          <Grid container spacing={3}>
-            {data?.map((item) => (
-                <Grid item key={item.id} xs={12} sm={4}>
-                    <Item item={item} handleAddToCart={handleAddToCart} />
-                </Grid>
-            ))}
-          </Grid>
+          <Nav cartItems={cartItems} setCartOpen={setCartOpen} getTotalItems={getTotalItems} />
+          <div className="grid-container">
+            <Grid container spacing={5}>
+                {data?.map((item) => (
+                    <Grid item key={item.id} xs={3} sm={78}>
+                        <Item item={item} handleAddToCart={handleAddToCart} />
+                    </Grid>
+                ))}
+            </Grid>
+          </div>
       </Wrapper>
   );
 }
