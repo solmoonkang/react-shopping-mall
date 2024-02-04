@@ -1,12 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import rootReducer from "./reducers/rootProducer";
 import App from "./App";
-import { QueryClient, QueryClientProvider } from "react-query";
 
-const client = new QueryClient();
+const store = createStore(rootReducer);
+
 ReactDOM.render(
-  <QueryClientProvider client={client}>
-    <App />
-  </QueryClientProvider>,
-  document.getElementById("root")
+    <Provider store={store}>
+        <App />
+    </Provider>,
+
+    document.getElementById("root")
 );
