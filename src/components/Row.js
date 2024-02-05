@@ -11,8 +11,8 @@ import { useNavigate } from "react-router-dom";
 // Row 컴포넌트는 선택된 카테고리에 따라 동적으로 상품 목록을 갱신하게 된다.
 
 const Product = ({ product, handleAddToCart, handleProductClick }) => (
-    <Products item key={product.id} xs={3} onClick={() => handleProductClick(product.id)}>
-        <ProductImage>
+    <Products item key={product.id} xs={3}>
+        <ProductImage onClick={() => handleProductClick(product.id)}>
             <img src={product.image} alt={product.title} />
         </ProductImage>
         <ProductTitle>{product.title}</ProductTitle>
