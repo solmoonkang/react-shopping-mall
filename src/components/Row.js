@@ -27,6 +27,7 @@ const Row = () => {
 
     const category = useSelector(state => state.category);
     const [products, setProducts] = useState([]);
+    const loggedIn = useSelector(state => state.user.loggedIn);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -41,6 +42,11 @@ const Row = () => {
     }, [category]);
 
     const handleAddToCart = (clickedItem) => {
+        if (!loggedIn) {
+            alert('장바구니에 물건을 담으려면 로그인을 해야 합니다.');
+            navigate("/auth/login");
+            return;
+        }
         dispatch(addToCart(clickedItem));
     }
 
