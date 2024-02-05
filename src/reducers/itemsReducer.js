@@ -1,11 +1,9 @@
-const initialState = { category: "모두", items: [] };
+import { LOAD_ITEMS } from "../actions/itemActions";
 
-const itemsReducer = (state = initialState, action) => {
-    
+const itemsReducer = (state = [], action) => {
     switch (action.type) {
-        case "LOAD_CATEGORY":
-            return { ...state, category: action.payload.category, items: action.payload.items };
-
+        case LOAD_ITEMS:
+            return action.payload;
         default: 
             return state;
     }
