@@ -1,22 +1,28 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Outlet } from "react-router-dom";
 import Nav from "./components/Nav";
-import Banner from "./components/Banner";
-import Row from "./components/Row";
 import MainPage from "./pages/MainPage";
-
 import "./App.css";
+
+const Layout = () => {
+
+    return (
+        <div>
+            <Nav />
+            <Outlet />
+        </div>
+    );
+}
 
 function App () {
 
     return (
         <Router>
-            <div>
-                <Nav />
-                <Banner />
-                <Row />
+            <div className="app">
                 <Routes>
-                    <Route path="/" index element={<MainPage />} />
+                    <Route path="/" element={<Layout />}>
+                        <Route index element={<MainPage />} />
+                    </Route>
                 </Routes>
             </div>
         </Router>
