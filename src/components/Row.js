@@ -5,14 +5,15 @@ import { Grid } from '@material-ui/core';
 import styled from "styled-components";
 import requests from "../api/requests";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // Row 컴포넌트: Banner 컴포넌트에서 클릭한 카테고리 버튼에 해당하는 상품들을 나열한다.
 // Row 컴포넌트는 선택된 카테고리에 따라 동적으로 상품 목록을 갱신하게 된다.
 
 // TODO: CSS Styling 이 제대로 적용되지 않았으므로 수정이 필요하다.
 
-const Product = ({ product, handleAddToCart }) => (
-    <Products item key={product.id} xs={3}>
+const Product = ({ product, handleAddToCart, handleProductClick }) => (
+    <Products item key={product.id} xs={3} onClick={() => handleProductClick(product.id)}>
         <ProductImage>
             <img src={product.image} alt={product.title} />
         </ProductImage>
@@ -27,16 +28,14 @@ const Product = ({ product, handleAddToCart }) => (
 const Row = () => {
 
     const category = useSelector(state => state.category);
-    console.log(`Category from Redux store: ${category}`);
     const [products, setProducts] = useState([]);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProducts = async () => {
             const request = requests[category] || requests.fetchAllProducts;
-            console.log(`Request URL: ${request}`);
             const response = await axios.get(request);
-            console.log(`Products fetched:`, response.data);
             setProducts(response.data);
         };
 
@@ -47,13 +46,17 @@ const Row = () => {
         dispatch(addToCart(clickedItem));
     }
 
+    const handleProductClick = (id) => {
+        navigate(`/detail/${id}`);
+    }
+
     return (
         <Wrapper>
             <div className="grid-container">
                 <div>Showing: {products.length} items</div>
                 <Grid container spacing={5}>
                     {products.map((product) => (
-                        <Product key={product.id} product={product} handleAddToCart={handleAddToCart} />
+                        <Product key={product.id} product={product} handleAddToCart={handleAddToCart} handleProductClick={handleProductClick} />
                     ))}
                 </Grid>
             </div>
@@ -70,21 +73,19 @@ const Products = styled(Grid)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
-  height: 400px;
   margin: 1rem;
 `;
 
 const ProductImage = styled.div`
-  width: 100%;
+  width: 80%;
   height: 200px;
   overflow: hidden
   margin: auto;
 
   img {
-    width: 100%;
+    width: 80%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 `;
 
@@ -117,14 +118,8 @@ const Wrapper = styled.div`
   width: 100%;
   border-radius: 20px;
 
-  > div:first-child {
-    margin-bottom: 1rem;
-  }
-
   div {
     font-family: Arial, Helvetica, sans-serif;
-    padding: 1rem;
-    height: 100%;
     margin-top: 10px;
   }
 `;
