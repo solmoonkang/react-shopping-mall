@@ -11,7 +11,7 @@ import "./Nav.css";
 
 function Nav() {
 
-    const cartItems = useSelector((state) => state.cart);
+    const cartItems = useSelector(state => state.cart);
     const totalItems = cartItems.reduce((count, item) => count + item.quantity, 0);
     const navigate = useNavigate();
     
