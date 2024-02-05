@@ -17,7 +17,7 @@ function Nav() {
     
     return (
         <nav className="nav">
-            <div className="nav__logo">
+            <div className="nav__logo" onClick={() => navigate("/")}>
                 <h2>Shop</h2>
             </div>
             <div className="nav__icons">
