@@ -20,7 +20,7 @@ const CartPage = () => {
     }
 
     const calculateTotal = (items) => 
-        items.reduce((ack, item) => ack + item.amount * item.price, 0);
+        items.reduce((ack, item) => ack + item.quantity * item.price, 0);
 
     return (
         <Wrapper>
