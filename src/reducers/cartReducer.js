@@ -14,8 +14,10 @@ const cartReducer = (state = [], action) => {
         
         case "REMOVE_FROM_CART":
 
+            const targetId = typeof action.payload === "object" ? action.payload.id : action.payload;
+
             return state.reduce((ack, item) => {
-                if (item.id === action.payload) {
+                if (item.id === targetId) {
                     if (item.quantity === 1) return ack;
                     return [...ack, {...item, quantity: item.quantity - 1 }];
                 } else {
