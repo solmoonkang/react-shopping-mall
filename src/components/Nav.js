@@ -22,7 +22,7 @@ function Nav() {
             </div>
             <div className="nav__icons">
                 <IconButton onClick={() => navigate("/cart")}>
-                    <Badge badgeContent={totalItems} color="error">
+                    <Badge badgeContent={totalItems} color="error" overlap="rectangular">
                         <AddShoppingCartIcon />
                     </Badge>
                 </IconButton>
