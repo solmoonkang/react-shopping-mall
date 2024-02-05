@@ -10,8 +10,6 @@ import { useNavigate } from "react-router-dom";
 // Row 컴포넌트: Banner 컴포넌트에서 클릭한 카테고리 버튼에 해당하는 상품들을 나열한다.
 // Row 컴포넌트는 선택된 카테고리에 따라 동적으로 상품 목록을 갱신하게 된다.
 
-// TODO: CSS Styling 이 제대로 적용되지 않았으므로 수정이 필요하다.
-
 const Product = ({ product, handleAddToCart, handleProductClick }) => (
     <Products item key={product.id} xs={3} onClick={() => handleProductClick(product.id)}>
         <ProductImage>
@@ -69,11 +67,8 @@ export default Row;
 const Products = styled(Grid)`
   border: 1px solid black;
   border-radius: 4px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  margin: 1rem;
 `;
 
 const ProductImage = styled.div`
