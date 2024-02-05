@@ -2,10 +2,13 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
+import PersonIcon from "@material-ui/icons/Person";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Badge, IconButton } from "@material-ui/core";
 import { useSelector} from "react-redux";
 import "./Nav.css";
+// import LoginIcon from '@mui/icons-material/Login';
+// import LogoutIcon from '@mui/icons-material/Logout';
 
 // NAV 컴포넌트: 로고, 장바구니, 사용자 페이지, 로그인 버튼 등의 네비게이션 요소를 담당한다.
 
@@ -13,6 +16,7 @@ function Nav() {
 
     const cartItems = useSelector(state => state.cart);
     const totalItems = cartItems.reduce((count, item) => count + item.quantity, 0);
+    const loggedIn = useSelector((state) => state.user.loggedIn);
     const navigate = useNavigate();
     
     return (
@@ -26,11 +30,11 @@ function Nav() {
                         <AddShoppingCartIcon />
                     </Badge>
                 </IconButton>
-                <IconButton>
-                    <AccountCircleIcon />
+                <IconButton onClick={() => navigate("/user")}>
+                    <PersonIcon />
                 </IconButton>
-                <IconButton>
-                    <LockOpenIcon />
+                <IconButton onClick={() => navigate("/auth/login")}>
+                    {loggedIn ? <ExitToAppIcon /> : <AccountCircleIcon />}
                 </IconButton>
             </div>
         </nav>
