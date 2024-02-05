@@ -10,7 +10,7 @@ const cartReducer = (state = [], action) => {
                 return state.map((i) => 
                     i.id === item.id ? { ...i, quantity: item.quantity + 1 } : i);
             }
-            return [...state, { ...item, quantitiy: 1 }];
+            return [...state, { ...item, quantity: 1 }];
         
         case "REMOVE_FROM_CART":
 
