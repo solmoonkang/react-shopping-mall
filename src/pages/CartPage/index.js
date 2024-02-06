@@ -16,6 +16,7 @@ const CartPage = () => {
 
     const handleRemoveFromCart = (id) => {
         dispatch(removeFromCart(id));
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }
 
     const handleAddToCart = (clickedItem) => {
