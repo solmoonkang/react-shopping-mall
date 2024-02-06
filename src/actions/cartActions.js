@@ -12,6 +12,12 @@ export const removeFromCart = (id) => {
     };
 };
 
+export const restoreCart = (items) => {
+    return {
+        type: "RESTORE_CART",
+        payload: items,
+    };
+};
 
 export const clearCart = () => ({
     type: "CLEAR_CART",
