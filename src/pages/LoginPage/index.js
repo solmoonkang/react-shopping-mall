@@ -29,7 +29,7 @@ const LoginPage = () => {
         
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            dispatch(login());
+            dispatch(login(email));
             alert('로그인이 성공적으로 완료되었습니다.');
             clearForm();
 
