@@ -2,7 +2,7 @@ import React from "react";
 import CartItem from "../../components/CartItem";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "../../actions/cartActions";
+import { addToCart, clearCart, removeFromCart } from "../../actions/cartActions";
 import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
@@ -26,6 +26,11 @@ const CartPage = () => {
     const calculateTotal = (items) => 
         items.reduce((ack, item) => ack + item.quantity * item.price, 0);
 
+    const handleCheckout = () => {
+        alert("결제가 완료되었습니다.");
+        dispatch(clearCart());
+    }
+
     return (
         <Wrapper>
             {cartItems.length === 0 ? (
@@ -40,7 +45,10 @@ const CartPage = () => {
                     {cartItems.map((item) => (
                         <CartItem key={item.id} item={item} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} />
                     ))}
-                    <h2>총 가격 : ${calculateTotal(cartItems).toFixed(2)}</h2>
+                    <Payment>
+                        <h3>총 가격 : ${calculateTotal(cartItems).toFixed(2)}</h3>
+                        <button onClick={handleCheckout}>결제하기</button>
+                    </Payment>
                 </>
             )}
         </Wrapper>
@@ -63,8 +71,8 @@ const EmptyCart = styled.div`
   text-align: center;
 
   img {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
   }
 
   h3, p {
@@ -73,6 +81,18 @@ const EmptyCart = styled.div`
 
   p {
     color: blue;
+    cursor: pointer;
+  }
+`;
+
+const Payment = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    width: 120px;
+    height: 40px;
     cursor: pointer;
   }
 `;
