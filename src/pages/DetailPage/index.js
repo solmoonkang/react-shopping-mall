@@ -39,8 +39,8 @@ const DetailPage = () => {
 
     const handleAddToCart = () => {
         if (!loggedIn) {
-            alert('장바구니에 물건을 담으려면 로그인해야 합니다.');
-            navigate('/auth/login');
+            alert("장바구니에 물건을 담으려면 로그인해야 합니다.");
+            navigate("/auth/login");
             return;
         }
         dispatch(addToCart(product));
@@ -51,12 +51,12 @@ const DetailPage = () => {
     }
 
     const handleCart = () => {
-        if (!loggedIn) {
-            alert('로그인 후 이용이 가능합니다.');
-            navigate('/auth/login');
-            return;
+        if (loggedIn) {
+            navigate("/cart");
+        } else {
+            alert("로그인 후에 이용하실 수 있습니다.");
+            navigate("/auth/login");
         }
-        navigate("/cart");
     }
 
     const isInCart = product && cartItems.find(item => item.id === product.id);
@@ -111,5 +111,6 @@ const ButtonContainer = styled.div`
         border-radius: 2px;
         width: 100px;
         height: 50px;
+        cursor: pointer;
     }
 `;
