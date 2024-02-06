@@ -9,8 +9,7 @@ const CartItem = ({ item, addToCart, removeFromCart }) => (
     <div>
       <h3>{item.title}</h3>
       <div className="information">
-        <p>Price: ${item.price}</p>
-        <p>Total: ${(item.quantity * item.price).toFixed(2)}</p>
+        <h3>Price: ${item.price}</h3>
       </div>
       <div className="buttons">
         <Button size="small" disableElevation variant="contained" onClick={() => removeFromCart(item.id)}>-</Button>
@@ -28,7 +27,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   font-family: Arial, Helvetica, sans-serif;
-  border-bottom: 1px solid lightblue;
+  border-bottom: 2px solid black;
   padding-bottom: 20px;
 
   div {
@@ -40,8 +39,9 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
   }
+
   img {
-    max-width: 80px;
+    max-width: 120px;
     object-fit: cover;
     margin-left: 40px;
   }
