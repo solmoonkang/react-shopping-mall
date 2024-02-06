@@ -5,8 +5,8 @@ import MainPage from "./pages/MainPage";
 import CartPage from "./pages/CartPage";
 import DetailPage from "./pages/DetailPage";
 import UserPage from "./pages/UserPage";
-import LoginPage from "./pages/AuthPage/Login.js";
-import SignupPage from "./pages/AuthPage/Signup.js";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/LoginPage";
 import "./App.css";
 import "./.firebase/firebaseConfig.js";
 
