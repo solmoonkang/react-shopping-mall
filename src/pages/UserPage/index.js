@@ -1,9 +1,23 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
 
-export default function UserPage() {
+const UserPage = () => {
+
+    const email = useSelector(state => state.user.email);
+
     return (
-        <div>
-            로그인했을 경우, 해당 사용자의 이메일이 출력되도록 구현
-        </div>
+        <CenterDiv>
+            안녕하세요. {email} 님 반갑습니다.
+        </CenterDiv>
     );
 }
+
+export default UserPage;
+
+const CenterDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
