@@ -15,7 +15,7 @@ const SignupPage = () => {
         const auth = getAuth();
 
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await createUserWithEmailAndPassword(auth, email, password);
             alert('회원가입이 성공적으로 완료되었습니다.');
             setEmail("");
             setPassword("");
