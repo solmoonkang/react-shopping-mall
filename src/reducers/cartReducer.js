@@ -26,8 +26,10 @@ const cartReducer = (state = [], action) => {
             }, []);
 
         case "CLEAR_CART":
-
             return [];
+
+        case "RESTORE_CART":
+            return [...action.payload];
 
         default:
             return state;
