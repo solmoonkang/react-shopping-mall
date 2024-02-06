@@ -28,6 +28,7 @@ const Row = () => {
     const category = useSelector(state => state.category);
     const [products, setProducts] = useState([]);
     const loggedIn = useSelector(state => state.user.loggedIn);
+    const cartItems = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -48,6 +49,7 @@ const Row = () => {
             return;
         }
         dispatch(addToCart(clickedItem));
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }
 
     const handleProductClick = (id) => {
