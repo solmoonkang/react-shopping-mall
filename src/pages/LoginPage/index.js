@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { login } from "../../actions/userActions";
-import { addToCart } from "../../actions/cartActions";
+import { clearCart, restoreCart } from "../../actions/cartActions";
 
 const LoginPage = () => {
 
@@ -28,13 +28,16 @@ const LoginPage = () => {
         e.preventDefault();
         
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            await signInWithEmailAndPassword(auth, email, password);
             dispatch(login());
             alert('로그인이 성공적으로 완료되었습니다.');
             clearForm();
 
-            const cartItems = [];
-            dispatch(addToCart(cartItems));
+            const cartItems = localStorage.getItem(email);
+            if (cartItems !== null) {
+                dispatch(restoreCart(JSON.parse(cartItems)));
+                dispatch(clearCart());
+            }
 
             navigate("/");
         } catch (error) {
