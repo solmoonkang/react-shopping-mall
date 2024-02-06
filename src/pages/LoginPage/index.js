@@ -1,29 +1,41 @@
-import React, { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState, useEffect } from "react";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { login } from "../../actions/userActions";
+import { addToCart } from "../../actions/cartActions";
 
 const LoginPage = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [userData, setUserData] = useState(null);
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const auth = getAuth();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                dispatch(login());
+            }
+        });
+
+        return () => unsubscribe();
+    }, [auth, dispatch]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const auth = getAuth();
+        
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            setUserData(userCredential.user);
             dispatch(login());
             alert('로그인이 성공적으로 완료되었습니다.');
-            setEmail("");
-            setPassword("");
+            clearForm();
+
+            const cartItems = [];
+            dispatch(addToCart(cartItems));
+
             navigate("/");
         } catch (error) {
             console.log(error);
@@ -39,6 +51,11 @@ const LoginPage = () => {
                 alert('로그인에 실패하였습니다.');
             }
         }
+    }
+
+    const clearForm = () => {
+        setEmail("");
+        setPassword("");
     }
 
     const handleSignup = () => {
