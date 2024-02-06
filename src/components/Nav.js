@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -7,10 +7,10 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Badge, IconButton } from "@material-ui/core";
 import { useSelector} from "react-redux";
 import "./Nav.css";
-import { logout } from "../actions/userActions";
-import { clearCart } from "../actions/cartActions";
-import { getAuth, signOut } from "firebase/auth";
+import { login, logout } from "../actions/userActions";
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
+import { clearCart } from "../actions/cartActions";
 
 // NAV 컴포넌트: 로고, 장바구니, 사용자 페이지, 로그인 버튼 등의 네비게이션 요소를 담당한다.
 
@@ -18,21 +18,29 @@ function Nav() {
 
     const cartItems = useSelector(state => state.cart);
     const totalItems = cartItems.reduce((count, item) => count + item.quantity, 0);
-    const [loggedIn, setLoggedIn] = useState(false);
+    const { loggedIn, email } = useSelector(state => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const auth = getAuth();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        const isLoggedIn = !!token;
-        setLoggedIn(isLoggedIn);
-    }, []);
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                dispatch(login());
+            } else {
+                dispatch(logout());
+            }
+        });
+
+        return () => unsubscribe();
+    }, [auth, dispatch]);
 
     const handleLogout = async () => {
         const auth = getAuth();
         
         try {
             await signOut(auth);
+            localStorage.setItem(email, JSON.stringify(cartItems));
             dispatch(logout());
             dispatch(clearCart());
             localStorage.removeItem('token');
@@ -70,8 +78,8 @@ function Nav() {
                 <IconButton onClick={handleUserIconClcik}>
                     <PersonIcon />
                 </IconButton>
-                <IconButton onClick={() => navigate("/auth/login")}>
-                    {loggedIn ? <ExitToAppIcon onClick={handleLogout} /> : <AccountCircleIcon />}
+                <IconButton onClick={loggedIn ? handleLogout : () => navigate("/auth/login")}>
+                    {loggedIn ? <ExitToAppIcon/> : <AccountCircleIcon />}
                 </IconButton>
             </div>
         </nav>
